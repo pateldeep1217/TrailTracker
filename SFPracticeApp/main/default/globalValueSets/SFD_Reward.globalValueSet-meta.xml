@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Apple iPad</fullName>
+        <default>false</default>
+        <label>Apple iPad</label>
+    </customValue>
+    <customValue>
+        <fullName>Meta Quest 2 VR</fullName>
+        <default>false</default>
+        <label>Meta Quest 2 VR</label>
+    </customValue>
+    <customValue>
+        <fullName>Travel to Salesforce Event</fullName>
+        <default>false</default>
+        <label>Travel to Salesforce Event</label>
+    </customValue>
+    <customValue>
+        <fullName>Winner Circle Points - 1000</fullName>
+        <default>false</default>
+        <label>Winner Circle Points - 1000</label>
+    </customValue>
+    <customValue>
+        <fullName>Winner Circle Points - 500</fullName>
+        <default>false</default>
+        <label>Winner Circle Points - 500</label>
+    </customValue>
+    <masterLabel>SFD Reward</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

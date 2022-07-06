@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Brazil_Resources</fullName>
+    <columns>NAME</columns>
+    <columns>Status__c</columns>
+    <columns>Emp_Code__c</columns>
+    <columns>Primary_Supervisor_Name__c</columns>
+    <columns>Emp_Country__c</columns>
+    <columns>Revised_Band__c</columns>
+    <columns>Role_picklist__c</columns>
+    <columns>Practice_Picklist__c</columns>
+    <columns>Experience__c</columns>
+    <columns>Wipro_Experience__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Emp_Country__c</field>
+        <operation>equals</operation>
+        <value>Brazil</value>
+    </filters>
+    <label>Brazil Resources</label>
+</ListView>
