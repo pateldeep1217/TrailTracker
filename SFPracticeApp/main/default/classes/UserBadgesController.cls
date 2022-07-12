@@ -28,6 +28,7 @@ public with sharing class UserBadgesController {
             UserBadgeMap.put(name, count);
         }
 
+        
         return UserBadgeMap;
     }
 

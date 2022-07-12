@@ -26,14 +26,14 @@ export default class TrailBadges extends LightningElement {
      
     
         
-                console.log('data =  ' + JSON.stringify(data.data));
+                console.log('data =  ' + JSON.stringify(data));
                 
-                console.log('data without stringify =  ' + data.data);
+                console.log('data without stringify =  ' + data);
 
            
         
        
-        }   
+        } 
     }
 
     
