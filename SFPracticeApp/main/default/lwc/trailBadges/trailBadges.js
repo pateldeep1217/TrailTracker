@@ -5,10 +5,21 @@ import ID from '@salesforce/schema/Resources__c.User__c';
 import userBadges from '@salesforce/apex/UserBadgesController.getUserBadge';
 export default class TrailBadges extends LightningElement 
 {
-    //ID
+    ID
     //@api recordId
     @track users;
     @track user;
+
+    
+    @wire(getRecord, {recordId:'$recordId', fields:[ID]})
+    resourceHandler({data}){
+        if(data){
+        //    console.log(data.fields.User__c.value);
+           this.Id = data.fields.User__c.value
+           console.log(this.ID);
+      
+        }
+    }
 
     @wire(userBadges)
     wiredUserBadges({error, data})
@@ -21,14 +32,16 @@ export default class TrailBadges extends LightningElement
             {
                 //const maybestring = JSON.stringify(this.users[key].ID);
                 
-                if(this.users[key].ID == "0058Z000007y6sDQAQ")
+                if(this.users[key].ID == this.ID)
                 {
                     //this.user = this.users[key];
                     //console.log(this.users[key]);
-                    console.log('This makes no fucking sense');
+                    console.log('inside If');
+                    console.log(this.users[key].Badges);
                     
                 }
-                console.log('This makes no fucking sense INTENSIFIES');
+             
+                console.log("Outside If");
 
                 
                 console.log(this.users[key].Id);
