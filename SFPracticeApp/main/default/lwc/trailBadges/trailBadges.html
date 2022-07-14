@@ -1,6 +1,33 @@
 <template>
 
 
+
+    <!-- 
+    <div if:true={badgeList.data}>
+        <lightning-datatable data={badgeList.data} columns={columns} key-field="id" hide-checkbox-column=true>
+
+        </lightning-datatable>
+
+
+    </div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 
+
     <lightning-card title="User Badges">
         <div class="slds-m-around_medium">
             <template if:true={badgeList.data}>
@@ -26,6 +53,22 @@
             </template>
 
         </div>
+
+    -->
+
+    <lightning-card>
+        <h1>Total Badges = {count}</h1>
+        <template if:true={badgeList.data}>
+            <template for:each={badgeList.data} for:item="badges">
+                <lightning-layout-item size="4" padding="around-small" key={badges.trailheadapp__User__c}
+                    class="liveValue">
+                    <div>
+                        <h1>Name : {badges.trailheadapp__Badge__r.Name}</h1>
+                    </div>
+                </lightning-layout-item>
+
+            </template>
+        </template>
     </lightning-card>
 
 

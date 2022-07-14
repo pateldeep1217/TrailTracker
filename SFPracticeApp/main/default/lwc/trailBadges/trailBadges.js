@@ -4,15 +4,26 @@ import {getRecord} from 'lightning/uiRecordApi';
 import ID from '@salesforce/schema/Resources__c.User__c';
 import userBadges from '@salesforce/apex/UserBadgesController.getUserBadge';
 import userBadgesInfo from '@salesforce/apex/UserBadgesController.getUserBadgesInfo';
+
+
+const COLUMNS = [
+    {label: 'Badge Name', fieldName: 'trailheadapp__Badge__r.Name', hideDefaultActions:true, type: 'text'}
+    //{label: 'Badge Icon', fieldName: 'trailheadapp__Badge_Icon__c', hideDefaultActions:true, type: 'image'}
+]
+
 export default class TrailBadges extends LightningElement 
 {
+
+
+    @track columns = COLUMNS;
     ID
     @api recordId
     @track users;
   
     userId
-    @track badgesInfo
-  
+    @api badgesInfo
+    count
+    
 
     
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
@@ -45,6 +56,8 @@ export default class TrailBadges extends LightningElement
                     console.log('inside If');
                     this.userId = this.users[key].Id;
                     console.log(this.users[key].Badges);
+                    this.count = this.users[key].Badges;
+                    
                 }    
   
             }
@@ -65,12 +78,9 @@ export default class TrailBadges extends LightningElement
         if(data){
             console.log("data = " + data);
         
+            const mapped = Object.entries(data);
 
-
-            const userBadgeArray = Object.entries(data);
-            this.badgesInfo = userBadgeArray;
-            console.log(this.badgesInfo);
-            console.log(userBadgeArray);
+            console.log(mapped)
           
                         
             
