@@ -3,20 +3,24 @@ import {getRecord} from 'lightning/uiRecordApi';
 
 import ID from '@salesforce/schema/Resources__c.User__c';
 import userBadges from '@salesforce/apex/UserBadgesController.getUserBadge';
+import userBadgesInfo from '@salesforce/apex/UserBadgesController.getUserBadgesInfo';
 export default class TrailBadges extends LightningElement 
 {
     ID
-    //@api recordId
+    @api recordId
     @track users;
-    @track user;
+  
+    userId
+    @track badgesInfo
+  
 
     
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data}){
         if(data){
         //    console.log(data.fields.User__c.value);
-           this.Id = data.fields.User__c.value
-           console.log(this.ID);
+           this.ID = data.fields.User__c.value
+           console.log( "id = " + this.ID);
       
         }
     }
@@ -27,28 +31,25 @@ export default class TrailBadges extends LightningElement
         if(data)
         {
             this.users = data;
-
+            console.log(this.users);
+            console.log(data);
+            console.log("ID inside wire =  " + this.ID);
             for (const key in this.users)
             {
-                //const maybestring = JSON.stringify(this.users[key].ID);
-                
-                if(this.users[key].ID == this.ID)
-                {
-                    //this.user = this.users[key];
-                    //console.log(this.users[key]);
-                    console.log('inside If');
-                    console.log(this.users[key].Badges);
-                    
-                }
-             
-                console.log("Outside If");
-
-                
+               
                 console.log(this.users[key].Id);
-                console.log(this.users[key].Badges);
+                
+                if(this.users[key].Id == this.ID)
+                {
+                  
+                    console.log('inside If');
+                    this.userId = this.users[key].Id;
+                    console.log(this.users[key].Badges);
+                }    
+  
             }
 
-            //console.log(this.users[0].Id);
+      
         }
 
         else if (error)
@@ -56,29 +57,35 @@ export default class TrailBadges extends LightningElement
             console.log(error);
         }
     }
+
+
+
+    @wire(userBadgesInfo, { userId: '$userId' })
+    userBadgeList(data,error){
+        if(data){
+            console.log("data = " + data);
+        
+
+
+            const userBadgeArray = Object.entries(data);
+            this.badgesInfo = userBadgeArray;
+            console.log(this.badgesInfo);
+            console.log(userBadgeArray);
+          
+                        
+            
+
+          
+        }else if(error){
+            console.log(error);
+        }
+
+    }
+
+
+    @wire(userBadgesInfo, { userId: '$userId' })
+    badgeList
+
+
 }
 
-/*
-    @wire(getRecord, {recordId:'$recordId', fields:[ID]})
-    resourceHandler({data}){
-        if(data){
-        //    console.log(data.fields.User__c.value);
-           this.Id = data.fields.User__c.value
-      
-        }
-    }
-    
-    @wire(userBadges)
-    badges(data){
-        if(data){
-                console.log('data =  ' + JSON.stringify(data.data)); 
-                console.log('data without stringify =  ' + data.data);
-        }   
-    }
-    */
-// for(let i in this.result){
-//     console.log('result loop = ' + this.result[i]);
-//     for(let j in this.result){
-//         console.log('result loop 2x = ' +  JSON.stringify(this.result[i][j]))
-//     }
-// }

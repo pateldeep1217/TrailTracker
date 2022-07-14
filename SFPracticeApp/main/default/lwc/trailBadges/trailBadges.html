@@ -1,22 +1,32 @@
-<!--
 <template>
-    <div>
-        UserId - {Id}
-    </div>
 
-    <template for:each={mapData} for:item="keyValue">
-        <tr key={keyValue.key}>
-            <th scope="col">
-                <div>{keyValue.key}</div>
-            </th>
-            <th scope="col">
-                <div>{keyValue.value}</div>
-            </th>
-        </tr>
-    </template>
 
-</template>
--->
+    <lightning-card title="User Badges">
+        <div class="slds-m-around_medium">
+            <template if:true={badgeList.data}>
+                <template for:each={badgeList.data} for:item="badge">
+                    <div key={badge.trailheadapp__User__c}>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <h1>{badge.trailheadapp__Badge__r.Name}</h1>
+                                <p>picture tag 2sx</p>
 
-<template>
+                                {badge.trailheadapp__Badge_Icon__c}
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </template>
+            </template>
+
+        </div>
+    </lightning-card>
+
+
 </template>
