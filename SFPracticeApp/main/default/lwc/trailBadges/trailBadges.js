@@ -21,6 +21,9 @@ export default class TrailBadges extends LightningElement
     userId;
     count;
    @track badge
+
+
+
     
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data})
@@ -32,6 +35,11 @@ export default class TrailBadges extends LightningElement
            console.log( "id = " + this.ID);
         }
     }
+
+
+ 
+
+ 
 
     @wire(userBadges)
     wiredUserBadges({error, data})
@@ -61,21 +69,10 @@ export default class TrailBadges extends LightningElement
         }
     }
 
-    @wire(userBadgesInfo, { userId: '$userId' })
-    userBadgeList(data,error)
-    {
-        if(data)
-        {
-            console.log("data = " + data);
-        
-            this.badge = data;
-            
-        }
-        else if(error)
-        {
-            console.log(error);
-        }
-    }
+
+ 
+
+
     
 
     @wire(userBadgesInfo, { userId: '$userId' })
