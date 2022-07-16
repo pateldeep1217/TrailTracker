@@ -3,7 +3,7 @@ import {getRecord} from 'lightning/uiRecordApi';
 import ID from '@salesforce/schema/Resources__c.User__c';
 import userBadges from '@salesforce/apex/UserBadgesController.getUserBadge';
 import userBadgesInfo from '@salesforce/apex/UserBadgesController.getUserBadgesInfo';
-import { refreshApex } from '@salesforce/apex';
+
 
 const COLUMNS = 
 [
@@ -69,7 +69,7 @@ export default class TrailBadges extends LightningElement
             console.log("data = " + data);
         
             this.badge = data;
-            refreshApex(this.badge);
+            
         }
         else if(error)
         {
@@ -80,9 +80,6 @@ export default class TrailBadges extends LightningElement
 
     @wire(userBadgesInfo, { userId: '$userId' })
     badgeList
-
- 
-
 
 
 }

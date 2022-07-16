@@ -3,7 +3,6 @@
     <lightning-card>
 
 
-
         <h1>Total Badges = {count}</h1>
 
         <!-- <template if:true={badgeList.data}>
@@ -35,8 +34,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <template if:true={badge.data}>
-                        <template for:each={badge.data} for:item="badges">
+                    <template if:true={badgeList.data}>
+                        <template for:each={badgeList.data} for:item="badges">
 
 
                             <tr class="slds-hint-parent" key={badges.trailheadapp__User__c}>
