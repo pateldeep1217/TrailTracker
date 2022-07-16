@@ -1,26 +1,8 @@
 <template>
-    All is as it should be.
+    All is as it should be. At least, I hope so...
     <lightning-card>
-
-
-
-
         <h1>Total Badges = {count}</h1>
-
-        <!-- <template if:true={badgeList.data}>
-            <template for:each={badgeList.data} for:item="badges"> -->
-        <!-- <lightning-layout-item size="4" padding="around-small" key={badges.trailheadapp__User__c}
-                    class="liveValue">
-                    <div>
-                        gsdgfsdfg
-                        <h1>Badge Name : {badges.trailheadapp__Badge__r.Name}</h1>
-                        {badges.trailheadapp__Badge_Icon__c}
-                    </div>
-
-
-                </lightning-layout-item> -->
         <div>
-
             <table class="slds-table slds-table_cell-buffer slds-table_bordered"
                 aria-labelledby="element-with-table-label other-element-with-table-label">
                 <thead>
@@ -31,15 +13,11 @@
                         <th class="" scope="col">
                             <div class="slds-truncate" title="Finished Date">Finished Date</div>
                         </th>
-
-
                     </tr>
                 </thead>
                 <tbody>
                     <template if:true={badgeList.data}>
                         <template for:each={badgeList.data} for:item="badges">
-
-
                             <tr class="slds-hint-parent" key={badges.trailheadapp__User__c}>
                                 <th data-label="Badge Name" scope="row">
                                     <div class="slds-truncate" title="Badge Name">
@@ -53,39 +31,13 @@
 
                                     </div>
                                 </td>
-
                             </tr>
-
-
-
                         </template>
                     </template>
                 </tbody>
-
             </table>
         </div>
-
     </lightning-card>
-
-    <!-- 
-    <lightning-card>
-
-        <template if:true={badgeList.data}>
-            <template for:each={badgeList.data} for:item="badges">
-                <lightning-layout-item size="4" padding="around-small" key={badges.trailheadapp__User__c}
-                    class="liveValue">
-                    <div>
-                        gsdgfsdfg
-                        <h1>Badge Name : {badges.trailheadapp__Badge__r.Name}</h1>
-                        {badges.trailheadapp__Badge_Icon__c}
-                    </div>
-
-
-                </lightning-layout-item>
-
-            </template>
-      
-    </lightning-card> -->
 </template>
 
 <!-- 
@@ -97,6 +49,7 @@
 
     </div>
  -->
+
 <!-- 
     <lightning-card title="User Badges">
         <div class="slds-m-around_medium">
@@ -118,3 +71,36 @@
         </div>
 
     -->
+
+        <!-- <template if:true={badgeList.data}>
+            <template for:each={badgeList.data} for:item="badges"> -->
+        <!-- <lightning-layout-item size="4" padding="around-small" key={badges.trailheadapp__User__c}
+                    class="liveValue">
+                    <div>
+                        gsdgfsdfg
+                        <h1>Badge Name : {badges.trailheadapp__Badge__r.Name}</h1>
+                        {badges.trailheadapp__Badge_Icon__c}
+                    </div>
+
+
+                </lightning-layout-item> -->
+   
+    <!-- 
+    <lightning-card>
+
+        <template if:true={badgeList.data}>
+            <template for:each={badgeList.data} for:item="badges">
+                <lightning-layout-item size="4" padding="around-small" key={badges.trailheadapp__User__c}
+                    class="liveValue">
+                    <div>
+                        gsdgfsdfg
+                        <h1>Badge Name : {badges.trailheadapp__Badge__r.Name}</h1>
+                        {badges.trailheadapp__Badge_Icon__c}
+                    </div>
+
+
+                </lightning-layout-item>
+
+            </template>
+      
+    </lightning-card> -->

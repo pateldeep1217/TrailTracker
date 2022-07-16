@@ -1,30 +1,19 @@
 import { LightningElement, wire,api,track } from 'lwc';
 import {getRecord} from 'lightning/uiRecordApi';
 import ID from '@salesforce/schema/Resources__c.User__c';
-import userBadges from '@salesforce/apex/UserBadgesController.getUserBadge';
-import userBadgesInfo from '@salesforce/apex/UserBadgesController.getUserBadgesInfo';
-
-
-const COLUMNS = 
-[
-    {label: 'Badge Name', fieldName: 'trailheadapp__Badge__r.Name', hideDefaultActions:true, type: 'text'}
-    //{label: 'Badge Icon', fieldName: 'trailheadapp__Badge_Icon__c', hideDefaultActions:true, type: 'image'}
-]
+import userBadgeCount from '@salesforce/apex/UserBadgesController.getUserBadgeCount';
+import userBadgeInfo from '@salesforce/apex/UserBadgesController.getUserBadgeInfo';
 
 export default class TrailBadges extends LightningElement 
 {
     @api recordId;
     @api badgesInfo;
-    @track users;
-    @track columns = COLUMNS;
+    @track users;   
+    @track badge
     ID;
     userId;
     count;
-   @track badge
 
-
-
-    
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data})
     {
@@ -36,12 +25,7 @@ export default class TrailBadges extends LightningElement
         }
     }
 
-
- 
-
- 
-
-    @wire(userBadges)
+    @wire(userBadgeCount)
     wiredUserBadges({error, data})
     {
         if(data)
@@ -69,15 +53,7 @@ export default class TrailBadges extends LightningElement
         }
     }
 
-
- 
-
-
-    
-
-    @wire(userBadgesInfo, { userId: '$userId' })
+    @wire(userBadgeInfo, { userId: '$userId' })
     badgeList
-
-
 }
 

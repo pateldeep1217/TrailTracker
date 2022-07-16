@@ -1,7 +1,7 @@
 public with sharing class UserBadgesController 
 {   
     @AuraEnabled (Cacheable = true)
-    public static List<AggregateResult> getUserBadge()
+    public static List<AggregateResult> getUserBadgeCount()
     {
         return [SELECT trailheadapp__User__r.Id, count(trailheadapp__Badge__c) Badges, trailheadapp__Status__c 
                 FROM trailheadapp__User_Badge__c 
@@ -9,9 +9,8 @@ public with sharing class UserBadgesController
                 GROUP BY trailheadapp__User__r.Id, trailheadapp__Status__c];
     }
 
-
     @AuraEnabled (Cacheable = true)
-    public static List<trailheadapp__User_Badge__c> getUserBadgesInfo(String userId)
+    public static List<trailheadapp__User_Badge__c> getUserBadgeInfo(String userId)
     {
 
         String key = '%' + userId + '%';
