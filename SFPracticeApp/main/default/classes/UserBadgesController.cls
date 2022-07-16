@@ -16,7 +16,7 @@ public with sharing class UserBadgesController
 
         String key = '%' + userId + '%';
         return [SELECT trailheadapp__User__r.Id, trailheadapp__Badge_Icon__c, trailheadapp__Status__c,trailheadapp__Badge__c,
-                trailheadapp__Badge__r.Name,trailheadapp__Badge__r.trailheadapp__Badge_Icon__c  
+                trailheadapp__Badge__r.Name,trailheadapp__Finished_Date__c  
                 FROM trailheadapp__User_Badge__c 
                 WHERE trailheadapp__Status__c  = 'Completed' 
                 AND trailheadapp__User__r.Id =: userId];
