@@ -3,6 +3,7 @@ import {getRecord} from 'lightning/uiRecordApi';
 import ID from '@salesforce/schema/Resources__c.User__c';
 import userBadgeCount from '@salesforce/apex/UserBadgesController.getUserBadgeCount';
 import userBadgeInfo from '@salesforce/apex/UserBadgesController.getUserBadgeInfo';
+import userBadgeInProgress from '@salesforce/apex/UserBadgesController.getUserBadgeInProgress';
 
 export default class TrailBadges extends LightningElement 
 {
@@ -13,6 +14,8 @@ export default class TrailBadges extends LightningElement
     ID;
     userId;
     count;
+    progress
+    buttonCategory = ''
 
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data})
@@ -53,7 +56,42 @@ export default class TrailBadges extends LightningElement
         }
     }
 
-    @wire(userBadgeInfo, { userId: '$userId' })
+
+    @wire(userBadgeInProgress)
+    wiredUserBadgesInProgress({error, data})
+    {
+        if(data)
+        {
+            this.users = data;
+            console.log(this.users);
+            console.log("data inprogress" + data);
+            console.log("ID inside wire progress =  " + this.ID);
+            for (const key in this.users)
+            {
+                console.log(this.users[key].Id);
+                if(this.users[key].Id == this.ID)
+                {
+                  
+                    console.log("progress badge = "+this.users[key].Badges);
+                    this.progress = this.users[key].Badges;
+                }    
+            }
+        }
+
+        else if (error)
+        {
+            console.log(error);
+        }
+    }
+
+    @wire(userBadgeInfo, { userId: '$userId', buttonCategory: '$buttonCategory' })
     badgeList
+
+
+    clickHandler(event){
+        this.buttonCategory = event.target.value;
+        console.log(this.buttonCategory);
+    }
+    
 }
 
