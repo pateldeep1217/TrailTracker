@@ -3,9 +3,13 @@
     {
       "path": "force-app",
       "default": true
+    },
+    {
+      "path": "SFPracticeApp",
+      "default": false
     }
   ],
-  "name": "TrailTrackerApp",
+  "name": "TrailTracker",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "55.0"
