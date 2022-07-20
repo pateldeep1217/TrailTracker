@@ -4,25 +4,40 @@ import ID from '@salesforce/schema/Resources__c.User__c';
 
 //aggregated list for Total badges
 import userBadgeCount from '@salesforce/apex/UserBadgesController.getUserBadgeCount';
-import userBadgeInfo from '@salesforce/apex/UserBadgesController.getUserBadgeInfo';
+
 //aggregated List for in progress badges
 import userBadgeInProgress from '@salesforce/apex/UserBadgesController.getUserBadgeInProgress';
 
+// list of all user badges 
+import userBadgeInfo from '@salesforce/apex/UserBadgesController.getUserBadgeInfo';
+
 export default class TrailBadges extends LightningElement 
 {
+    //passing parameter for get record wire adapter 
     @api recordId;
-    @api badgesInfo;
-    @track userTotalBadges;   
-    @track userInProgressBadges;   
-    @track badge
+
+    //getting total badge data from apex class with help of wire adapter
+    @track userTotalBadgesData;   
+
+    //getting in progress data from apex class with help of wire adapter 
+    @track userInProgressBadgesData;   
+
+    // user id getting from get record wire adapter 
     ID;
+
+    //user id getting form apex class badge info 
     userId;
+
+    // variable for total badges
     @api count;
+    //varaible for in progress badges
     @api progress
+
+    //getting value from user when they click on button
     buttonCategory = ''
 
 
-    // Getting Id from record page 
+    // get record wire adapter 
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data})
     {
@@ -39,8 +54,9 @@ export default class TrailBadges extends LightningElement
     {
         if(data)
         {
-            this.userTotalBadges = data;
-            this.getBadges(this.userTotalBadges);
+            this.userTotalBadgesData = data;
+            //passing data to get badges function to get number of compeleted badges
+            this.getBadges(this.userTotalBadgesData);
         }
 
         else if (error)
@@ -55,8 +71,9 @@ export default class TrailBadges extends LightningElement
     {
         if(data)
         {
-            this.userInProgressBadges = data;    
-            this.getBadges(this.userInProgressBadges);
+            this.userInProgressBadgesData = data;  
+            //passing data to get badges function  to get nunber of in progress badges
+            this.getBadges(this.userInProgressBadgesData);
 
         }
 
@@ -65,7 +82,7 @@ export default class TrailBadges extends LightningElement
             console.log(error);
         }
     }
-    //matches the user Id from record page to the data user Id and will get total badges 
+    //function which is being used in userBadgeCount and userBadgeInProgress wire adapter to get number of compeleted and in progress badges
     getBadges(data){
         console.log(data);
         for (const key in data)
@@ -91,12 +108,14 @@ export default class TrailBadges extends LightningElement
         this.buttonCategory = event.target.value;
         console.log(this.buttonCategory);
     }
+  
+      
 
-
-    //passing the button value to get the list. 
+    //passing the user id and button value to get the badges info. 
     @wire(userBadgeInfo, { userId: '$userId', buttonCategory: '$buttonCategory' })
     badgeList
 
+  
  
 
 }

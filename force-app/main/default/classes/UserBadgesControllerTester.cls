@@ -35,7 +35,7 @@ public class UserBadgesControllerTester
         newuser.TimeZoneSidKey = 'America/Los_Angeles';
         newuser.LocaleSidKey = 'en_US';
         newuser.EmailEncodingKey = 'UTF-8';
-        newuser.ProfileId = '00e8Z000001vjb0';
+        newuser.ProfileId =[SELECT Id FROM Profile limit 1].Id;
         newuser.LanguageLocaleKey = 'en_US';
         insert newuser;
         

@@ -1,5 +1,5 @@
 <template>
-    <!-- 1 compo -->
+    <!-- Shows number of completed and in progress badges -->
     <lightning-card class="slds-align_absolute-center slds-m-vertical_medium" title="Trailhead Badges Summary"
         style="height:5rem">
         <div class="slds-grid slds-gutters">
@@ -15,7 +15,7 @@
         </div>
     </lightning-card>
 
-
+    <!-- 4 buttons let you filter by different types of badges   -->
     <lightning-card class="slds-align_absolute-center slds-m-vertical_medium ">
         <lightning-button class="slds-m-horizontal_x-small" variant="brand" label="Superbadge" value="Superbadge"
             onclick={clickHandler}>
@@ -33,7 +33,7 @@
     </lightning-card>
 
 
-
+    <!-- Table shows list of badges -->
     <lightning-card>
         <div>
             <table class="slds-table slds-table_cell-buffer slds-table_bordered"
@@ -83,8 +83,6 @@
 
                                     </div>
                                 </td>
-
-
 
                             </tr>
                         </template>
