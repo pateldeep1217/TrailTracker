@@ -1,0 +1,96 @@
+<template>
+    <!-- 1 compo -->
+    <lightning-card class="slds-align_absolute-center slds-m-vertical_medium" title="Trailhead Badges Summary"
+        style="height:5rem">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <h1 class="slds-align_absolute-center">Compeleted</h1>
+                <p class="slds-align_absolute-center slds-text-heading_large">{count}</p>
+
+            </div>
+            <div class="slds-col">
+                <h1 class="slds-align_absolute-center">In Progress</h1>
+                <p class="slds-align_absolute-center slds-text-heading_large">{progress}</p>
+            </div>
+        </div>
+    </lightning-card>
+
+
+    <lightning-card class="slds-align_absolute-center slds-m-vertical_medium ">
+        <lightning-button class="slds-m-horizontal_x-small" variant="brand" label="Superbadge" value="Superbadge"
+            onclick={clickHandler}>
+        </lightning-button>
+
+        <lightning-button class="slds-m-horizontal_x-small" variant="brand" label="Module" value="Module"
+            onclick={clickHandler}>
+        </lightning-button>
+
+        <lightning-button class="slds-m-horizontal_x-small" variant="brand" label="Project" value="Project"
+            onclick={clickHandler}>
+        </lightning-button>
+        <lightning-button class="slds-m-horizontal_x-small" variant="brand" label="All" value="" onclick={clickHandler}>
+        </lightning-button>
+    </lightning-card>
+
+
+
+    <lightning-card>
+        <div>
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Finished Date">Icon</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Badge Name">Badge Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Type">Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Finished Date">Finished Date</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={badgeList.data}>
+                        <template for:each={badgeList.data} for:item="badges">
+                            <tr class="slds-hint-parent" key={badges.trailheadapp__User__c}>
+                                <td data-label="Icon">
+                                    <div class="slds-truncate" title="Icon">
+                                        <img class="badge-icon"
+                                            src={badges.trailheadapp__Badge__r.trailheadapp__Icon__c} />
+                                    </div>
+                                </td>
+                                <th data-label="Badge Name" scope="row">
+                                    <div class="slds-truncate" title="Badge Name">
+                                        <a href={badges.trailheadapp__URL__c}
+                                            tabindex="-1">{badges.trailheadapp__Badge__r.Name}</a>
+                                    </div>
+                                </th>
+
+                                <td data-label="Type">
+                                    <div class="slds-truncate" title="Type">
+                                        <p>{badges.trailheadapp__Badge__r.trailheadapp__Type__c}</p>
+                                    </div>
+                                </td>
+                                <td data-label="Finished Date">
+                                    <div class="slds-truncate" title="Finished Date">
+                                        <lightning-formatted-date-time value={badges.trailheadapp__Finished_Date__c}>
+                                        </lightning-formatted-date-time>
+
+                                    </div>
+                                </td>
+
+
+
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>
+</template>
