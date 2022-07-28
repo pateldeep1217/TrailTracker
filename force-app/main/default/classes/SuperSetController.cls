@@ -57,6 +57,7 @@ public with sharing class SuperSetController {
 
                     if(developerSuperSet.size() == 2){
                         system.debug(developerSuperSet);
+                        developerSuperSet.clear();
                     }
                 }
            
