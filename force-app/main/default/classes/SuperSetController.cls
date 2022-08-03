@@ -1,76 +1,245 @@
 public with sharing class SuperSetController {
+     
+    static List<String> developerSuperSet = new List<String>();
+    static List<String> adminSuperSet = new List<String>();
+    static List<String> appBuilderSuperSet = new List<String>();
+    static List<String> billingSpecialistSuperSet = new List<String>();
+    static List<String> CRMAnalyticsSuperSet = new List<String>();
+
+          // List<Datetime> dateSet = new List<Datetime>();
+         static Datetime firstDate;
+         static Datetime secondDate;
+         static Datetime thirdDate;
+  
    
-    public static void getSuperSet()
-    {
+    public static void getSuperSet(){
        
         
+
+
         
-        List<String> developerSuperSet = new List<String>();
-        List<String> adminSuperSet = new List<String>();
-        List<String> appBuilderSuperSet = new List<String>();
-        List<String> billingSpecialistSuperSet = new List<String>();
-        List<String> CRMAnalyticsSuperSet = new List<String>();
+        Set<SuperSet__c> superSetRecs = new Set<SuperSet__c>();
+        Map<Id,List<Resources__c>> userAndResId = new Map<Id,List<Resources__c>>();
 
-       // List<Datetime> dateSet = new List<Datetime>();
-        Datetime firstDate;
-        Datetime secondDate;
-        Datetime thirdDate;
-
-
-        List<Resources__c> resourceRecs = [SELECT Id, User__c, User__r.name from Resources__c];
-
-
-
-      
-
-        Set<Id> userIds = new Set<Id>();
-
+ 
+        List<Resources__c> resourceRecs = [SELECT Id, Name , User__c from Resources__c];
 
         for(Resources__c resRec: resourceRecs){
-            userIds.add(resRec.User__c);
-          
+            userAndResId.put(resRec.User__c, new List<Resources__c>());
+            userAndResId.get(resRec.user__c).add(resRec);
+            
         }
 
-        List<trailheadapp__User_Badge__c> listBadge=[SELECT trailheadapp__User__r.Id, trailheadapp__Status__c,trailheadapp__Badge__c,trailheadapp__Badge__r.trailheadapp__Type__c,trailheadapp__Badge__r.Name,trailheadapp__Finished_Date__c
+        // System.debug(userBadgeMap);
+
+
+        List<trailheadapp__User_Badge__c> listBadge=[SELECT trailheadapp__User__r.Id,trailheadapp__User__r.Name, trailheadapp__Status__c,trailheadapp__Badge__c,trailheadapp__Badge__r.trailheadapp__Type__c,trailheadapp__Badge__r.Name,trailheadapp__Finished_Date__c
         FROM trailheadapp__User_Badge__c 
         WHERE trailheadapp__Status__c  = 'Completed' AND trailheadapp__Badge__r.trailheadapp__Type__c = 'Superbadge'
-        AND trailheadapp__User__r.Id IN:userIds
+        AND trailheadapp__User__r.Id IN: userAndResId.keySet()
         ];
 
+        // System.debug(userBadgeMap);
 
-        for(Id userId: userIds){
-            System.debug(userId);
+        // for(trailheadapp__User_Badge__c userBadge: listBadge){
+            
+        //     userBadgeMap.get(userBadge.trailheadapp__User__r.Id).add(userBadge);
+        
+        // }
+
+        for(Id userId: userAndResId.keySet()){
+                System.debug(userId);
+
             for(trailheadapp__User_Badge__c badge: listBadge){
-                 if(badge.trailheadapp__User__r.Id == userId){
-                    
-                    System.debug(badge);
-                    if(badge.trailheadapp__Badge__r.Name == 'Apex Specialist'){
-                       
-                        developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
-                        // firstDate = badge.trailheadapp__Finished_Date__c;
-                    }else if(badge.trailheadapp__Badge__r.Name == 'Process Automation Specialist'){
-                       
-                        developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
-                        // SecondDate = badge.trailheadapp__Finished_Date__c;
+                if(userId== badge.trailheadapp__User__r.Id){
 
-                    }
+
+                    //System.debug(badge);
+
+                    addingSuperBadgesToList(badge);
+
+                    // if(badge.trailheadapp__Badge__r.Name == 'Apex Specialist'){
+                    //     System.debug(badge.trailheadapp__Badge__r.Name);
+                        
+                    //     developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                    //     firstDate = badge.trailheadapp__Finished_Date__c;
+                    // }else if(badge.trailheadapp__Badge__r.Name == 'Process Automation Specialist'){
+                    //     System.debug(badge.trailheadapp__Badge__r.Name);
+                        
+                    //     developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                    //     SecondDate = badge.trailheadapp__Finished_Date__c;
+                    // }
+
 
                     if(developerSuperSet.size() == 2){
-                        system.debug(developerSuperSet);
-                        developerSuperSet.clear();
+                       
+                        SuperSet__c supersetRec = new SuperSet__c();
+                        supersetRec.Name = 'Developer Super Set';
+
+                        System.debug(userAndResId.get(userId));
+                        for(Resources__c resId: userAndResId.get(userId) ){
+                            supersetRec.Resource__c = resId.Id;
+                        }
+                    
+                        if(firstDate>secondDate){
+                            supersetRec.Finished_Date__c = firstDate;
+
+                        }else{
+                            supersetRec.Finished_Date__c = secondDate;
+                        }
+                            superSetRecs.add(supersetRec);
+                                                    
+                            developerSuperSet.clear();
+                        }
+
                     }
-                }
-           
-    
-               
-                
-               
-    
             }
-           
         }
+
+        for(SuperSet__c superSet: superSetRecs){
+            System.debug(superSet);
+        }    
+    }  
+
+    public static void addingSuperBadgesToList(trailheadapp__User_Badge__c badge){
+        switch on badge.trailheadapp__Badge__r.Name
+            {
+                when 'Business Administration Specialist', 'Lightning Experience Reports & Dashboards Specialist'
+                {
+                    adminSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                }
+                        
+                when 'Security Specialist'
+                    {
+                        adminsuperset.add(badge.trailheadapp__Badge__r.Name);
+                        appBuilderSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                    }
+                        
+                    when 'App Customization Specialist'
+                    {
+                        appBuilderSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                    }
+                        
+                    when 'Process Automation Specialist'
+                    {
+                        appBuilderSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                        developersuperset.add(badge.trailheadapp__Badge__r.Name);
+                    }
+                        
+                    when 'Billing Specialist', 'Advanced Billing Specialist'
+                    {
+                        billingSpecialistSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                    }
+                        
+                    when 'Apex Specialist'
+                    {
+                        developersuperset.add(badge.trailheadapp__Badge__r.Name);
+                    }
+                        
+                    when 'CRM Analytics Data Preparation Specialist', 'CRM Analytics and Einstein Discovery Insights Specialist'
+                        {
+                             CRMAnalyticsSuperSet.add(badge.trailheadapp__Badge__r.Name);
+                        }
+                    }
+       
+    }   
+       
+}
+
+   
+        // for(Id userId: userBadgeMap.keySet()){
+  
+
+        //     System.debug(developerSuperSet);
+        // }
+
+
+
+
+        // for(Id userId: userIds){
+        //     System.debug(userId);
+           
+
+        //     for(trailheadapp__User_Badge__c badge: listBadge){
+                
+        //          if(badge.trailheadapp__User__r.Id == userId){
+                    
+               
+        //             if(badge.trailheadapp__Badge__r.Name == 'Apex Specialist'){
+                       
+        //                 developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
+        //                  firstDate = badge.trailheadapp__Finished_Date__c;
+        //             }else if(badge.trailheadapp__Badge__r.Name == 'Process Automation Specialist'){
+                       
+        //                 developerSuperSet.add(badge.trailheadapp__Badge__r.Name);
+        //                 SecondDate = badge.trailheadapp__Finished_Date__c;
+
+        //             }
+
+
+        //             if(badge.trailheadapp__Badge__r.Name == 'Billing Specialist'){
+                       
+        //                 billingSpecialistSuperSet.add(badge.trailheadapp__Badge__r.Name) ;
+        //                 firstDate = badge.trailheadapp__Finished_Date__c;
+        //             }else if(badge.trailheadapp__Badge__r.Name == 'Advanced Billing Specialist'){
+                       
+        //                 billingSpecialistSuperSet.add(badge.trailheadapp__Badge__r.Name);
+        //                 SecondDate = badge.trailheadapp__Finished_Date__c;
+
+        //             }
+
+                   
+
+        //             if(developerSuperSet.size() == 2){
+        //                 system.debug(developerSuperSet);
+                    
+        //                     SuperSet__c supersetRec = new SuperSet__c();
+        //                     supersetRec.Name = 'Developer Super Set';
+        //                     supersetRec.Resource__c = userId;
+        //                     if(firstDate>secondDate){
+        //                         supersetRec.Finished_Date__c = firstDate;
+
+        //                     }else{
+                               
+        //                        supersetRec.Finished_Date__c = secondDate;
+        //                     }
+
+        //                     superSetRecs.add(supersetRec);
+                                                
+        //                 developerSuperSet.clear();
+        //             }
+
+        //             if(billingSpecialistSuperSet.size() == 2){
+        //                 system.debug(billingSpecialistSuperSet);
+                       
+        //                     SuperSet__c supersetRec = new SuperSet__c();
+        //                     supersetRec.Name = 'Billing Super Set';
+        //                     supersetRec.Resource__c = userId;
+        //                     if(firstDate>secondDate){
+        //                         supersetRec.Finished_Date__c = firstDate;
+
+        //                     }else{
+                               
+        //                        supersetRec.Finished_Date__c = secondDate;
+        //                     }
+
+        //                     superSetRecs.add(supersetRec);
+                    
+                        
+
+        //                 billingSpecialistSuperSet.clear();
+                       
+        //             }
+
+
+
+        //         }
+        //     }
+        // }
+
+
+
      
-        
         
         // System.debug(listBadge);
         
@@ -185,5 +354,5 @@ public with sharing class SuperSetController {
                    
         
     
-}
-}
+
+
