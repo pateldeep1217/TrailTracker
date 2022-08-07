@@ -21,6 +21,8 @@ public with sharing class UserBadgesController
     @AuraEnabled (Cacheable = true)
     public static List<trailheadapp__User_Badge__c> getUserBadgeInfo(String userId, String buttonCategory)
     {
+        System.debug(userId);
+        System.debug(buttonCategory);
    
         
          String type = '%' + buttonCategory + '%';
@@ -48,4 +50,11 @@ public with sharing class UserBadgesController
                     ORDER BY trailheadapp__Badge__r.Name ASC];
         }
     }
+
+
+
+   
+
+
+    
 }

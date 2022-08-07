@@ -23,10 +23,8 @@ export default class TrailBadges extends LightningElement
     @track userInProgressBadgesData;   
 
     // user id getting from get record wire adapter 
-    ID;
-
-    //user id getting form apex class badge info 
     userId;
+
 
     // variable for total badges
     @api count;
@@ -37,19 +35,21 @@ export default class TrailBadges extends LightningElement
     buttonCategory = ''
 
 
+    
+
     // get record wire adapter 
     @wire(getRecord, {recordId:'$recordId', fields:[ID]})
     resourceHandler({data})
     {
         if(data)
         {
-           this.ID = data.fields.User__c.value
-           console.log( "id = " + this.ID);
+           this.userId = data.fields.User__c.value
+           console.log( "id = " +  this.userId);
         }
     }
 
     //getting Total Badges which are Completed 
-    @wire(userBadgeCount)
+    @wire(userBadgeCount,{ userId: '$userId'})
     wiredUserBadges({error, data})
     {
         if(data)
@@ -66,7 +66,7 @@ export default class TrailBadges extends LightningElement
     }
 
     //getting Total badges which are In progress
-    @wire(userBadgeInProgress)
+    @wire(userBadgeInProgress ,{ userId: '$userId'})
     wiredUserBadgesInProgress({error, data})
     {
         if(data)
@@ -83,20 +83,26 @@ export default class TrailBadges extends LightningElement
         }
     }
     //function which is being used in userBadgeCount and userBadgeInProgress wire adapter to get number of compeleted and in progress badges
+
+
     getBadges(data){
-        console.log(data);
+   
         for (const key in data)
             {              
-                console.log(data[key].Id);
+
                 //matching user id
-                if(data[key].Id == this.ID)
+                if(data[key].Id == this.userId)
                 {
-                    this.userId = data[key].Id;
+                console.log("inside for loop inside if = " + data[key].Badges + 'AND ' +  this.userId);
+                    
+                
                     // checking wheather status is compeleted or in progress
                     if(data[key].trailheadapp__Status__c == 'Completed'){
                         this.count = data[key].Badges;
+                        console.log(data[key].Badges);
                     }else if(data[key].trailheadapp__Status__c == 'In-Progress'){
                         this.progress = data[key].Badges;
+                        console.log(data[key].Badges);
                     }
                 }    
             }
@@ -106,15 +112,17 @@ export default class TrailBadges extends LightningElement
     //click handler to get the button value 
     clickHandler(event){
         this.buttonCategory = event.target.value;
-        console.log(this.buttonCategory);
+
     }
-  
+
       
 
-    //passing the user id and button value to get the badges info. 
+   //passing the user id and button value to get the badges info. 
     @wire(userBadgeInfo, { userId: '$userId', buttonCategory: '$buttonCategory' })
     badgeList
 
+    
+   
   
  
 
